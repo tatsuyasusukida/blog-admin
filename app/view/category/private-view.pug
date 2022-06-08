@@ -1,0 +1,53 @@
+extends ../layout/private
+
+block title
+  title カテゴリの詳細｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../../') ホーム
+        li.breadcrumb-item
+          a(href='../') カテゴリ
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 詳細
+
+block main
+  main
+    .container
+      h1 カテゴリの詳細
+      nav.mt-3(aria-label='メニュー')
+        .d-flex.flex-wrap.gap-2
+          a.btn.btn-outline-secondary(href='../') 戻る
+          a.btn.btn-outline-primary(href='./edit/') 修正...
+          a.btn.btn-outline-danger(href='./delete/') 削除...
+      section
+        h2.mt-3 目次
+        nav(aria-label='目次')
+          ul.list-unstyled
+            li
+              a(href='#about') カテゴリについて
+            li
+              a(href='#serial') 紐付け先のシリーズ
+      section
+        h2.pt-3.mt-3.border-top(id='about') カテゴリについて
+        dl.mb-0
+          dt 表示順序
+          dd #{category.sort}
+
+          dt カテゴリコード
+          dd #{category.code}
+
+          dt タイトル
+          dd #{category.title}
+      section
+        h2.pt-3.mt-3.border-top(id='serial') 紐付け先のシリーズ
+        if serials.length === 0
+          p.mb-0 紐付け先のシリーズはありません。
+        else
+          nav.mt-3(aria-labelledby='serial')
+            each serial in serials
+              .list-group
+                a.list-group-item.list-group-item-action(href=`../../serial/${serial.id}/`) #{serial.title}

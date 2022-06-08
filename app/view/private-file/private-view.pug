@@ -1,0 +1,52 @@
+extends ../layout/private
+
+block title
+  title 非公開ファイルの詳細｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../../') ホーム
+        li.breadcrumb-item
+          a(href='../') 非公開ファイル
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 詳細
+
+block main
+  main
+    .container
+      h1 非公開ファイルの詳細
+      nav.mt-3(aria-label='メニュー')
+        .d-flex.flex-wrap.gap-2
+          a.btn.btn-outline-secondary(href='../') 戻る
+          a.btn.btn-outline-primary(href='./edit/') 修正...
+          a.btn.btn-outline-danger(href='./delete/') 削除...
+      section
+        h2.mt-3 目次
+        nav(aria-label='目次')
+          ul.list-unstyled
+            li
+              a(href='#about') 非公開ファイルについて
+      section
+        h2.pt-3.mt-3.border-top(id='about') 非公開ファイルについて
+        dl.mb-0
+          dt 非公開ファイルコード
+          dd #{privateFile.code}
+
+          dt タイトル
+          dd #{privateFile.title}
+
+          dt 説明
+          dd
+            p.mb-0
+              each line, i in privateFile.descriptionLines
+                if i >= 1
+                  br
+                | #{line}
+
+          dt ファイルのURL
+          dd
+            a(href=privateFile.locationUrl target='_blank')
+              | #{privateFile.location}

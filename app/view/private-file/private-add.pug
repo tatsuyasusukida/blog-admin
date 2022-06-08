@@ -1,0 +1,18 @@
+extends ../layout/private
+
+block title
+  title 非公開ファイルの登録｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../../') ホーム
+        li.breadcrumb-item
+          a(href='../') 非公開ファイル
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 登録
+
+block main
+  #main

@@ -1,0 +1,6 @@
+include ../../mixin/form
+
+mixin form-content
+  +form-input('sort', '表示順序', 'number')
+  +form-radio('articleFromId', '紐付け元の記事')
+  +form-radio('articleToId', '紐付け先の記事')

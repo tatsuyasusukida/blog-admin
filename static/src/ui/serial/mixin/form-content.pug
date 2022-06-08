@@ -1,0 +1,8 @@
+include ../../mixin/form
+
+mixin form-content
+  +form-input('code', 'シリーズコード', 'text')
+  +form-input('title', 'タイトル', 'text')
+  +form-input('titleShort', '短いタイトル', 'text')
+  +form-input('visual', 'メインビジュアル', 'url')
+  +form-radio-is-published('isPublished', '下書きと公開のいずれか')

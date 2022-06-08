@@ -1,0 +1,28 @@
+extends ../layout/private
+include ../mixin/search-form
+include ../mixin/pagination
+
+block title
+  title メール文面の一覧｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../') ホーム
+        li.breadcrumb-item
+          a(href='./' aria-current='page') メール文面
+
+block main
+  main
+    .container
+      h1 メール文面の一覧
+      nav.mt-3(aria-label='メニュー')
+        .d-flex.flex-wrap.gap-2
+          a.btn.btn-outline-secondary(href='../') 戻る
+      nav.mt-3(aria-label='リスト')
+        .list-group
+          each emailTemplate in emailTemplates
+            a.list-group-item.list-group-item-action(href=`./${emailTemplate.id}/`)
+              | #{emailTemplate.title}

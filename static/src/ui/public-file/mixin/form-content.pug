@@ -1,0 +1,10 @@
+include ../../mixin/form
+
+mixin form-content(type)
+  +form-input('code', '公開ファイルコード', 'text')
+  +form-input('title', 'タイトル', 'text')
+  +form-textarea('description', '説明')
+  if type === 'edit'
+    +form-file-change('fileChange', 'ファイルの変更')
+  template(v-if="body.form.fileChange === '変更する'")
+    +form-file('file', 'ファイル')

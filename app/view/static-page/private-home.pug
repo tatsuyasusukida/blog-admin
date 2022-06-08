@@ -1,0 +1,61 @@
+extends ../layout/private
+
+block title
+  title ホーム｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='./' aria-current='page') ホーム
+
+block main
+  main
+    .container
+      h1 ホーム
+      section
+        h2.mt-3.mb-3.pt-3.border-top(id='toc') 目次
+        nav(aria-labelledby='toc')
+          ul.list-unstyled
+            li
+              a(href='#article') 記事
+            li
+              a(href='#document') 資料
+            li
+              a(href='#request') お問い合わせ
+            li
+              a(href='#iam') 認証
+      section
+        h2.mt-3.mb-3.pt-3.border-top(id='article') 記事
+        nav(aria-labelledby='article')
+          .d-grid.gap-2
+            a.btn.btn-outline-primary(href='./article/') 記事の一覧
+            a.btn.btn-outline-primary(href='./article-article/') 記事紐付けの一覧
+            a.btn.btn-outline-primary(href='./serial/') シリーズの一覧
+            a.btn.btn-outline-primary(href='./category/') カテゴリの一覧
+            a.btn.btn-outline-primary(href='./topic/') トピックの一覧
+            a.btn.btn-outline-primary(href='./topic-article/') トピック紐付けの一覧
+            a.btn.btn-outline-primary(href='./author/') 著者の一覧
+            a.btn.btn-outline-primary(href='./public-file/') 公開ファイルの一覧
+      section
+        h2.mt-3.mb-3.pt-3.border-top(id='document') 資料
+        nav(aria-labelledby='document')
+          .d-grid.gap-2
+            a.btn.btn-outline-primary(href='./document/') 資料の一覧
+            a.btn.btn-outline-primary(href='./document-article/') 資料紐付けの一覧
+            a.btn.btn-outline-primary(href='./private-file/') 非公開ファイルの一覧
+      section
+        h2.mt-3.mb-3.pt-3.border-top(id='request') お問い合わせ
+        nav(aria-labelledby='request')
+          .d-grid.gap-2
+            a.btn.btn-outline-primary(href='./request/') 資料請求の一覧
+            a.btn.btn-outline-primary(href='./unsubscribe/') 配信停止の一覧
+            a.btn.btn-outline-primary(href='./email-template/') メール文面の一覧
+            a.btn.btn-outline-primary(href='./email/') メール送信履歴の一覧
+      section
+        h2.mt-3.mb-3.pt-3.border-top(id='iam') 認証
+        nav(aria-labelledby='iam')
+          .d-grid.gap-2
+            a.btn.btn-outline-primary(href='./iam/signout/') ログアウト...
+

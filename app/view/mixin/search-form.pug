@@ -1,0 +1,5 @@
+mixin search-form(keyword)
+  form.mt-3(role='search')
+    .input-group
+      input.form-control(type='search' name='keyword' id='keyword' aria-label='検索キーワード' aria-describedby='submit' placeholder='キーワード' value=keyword)
+      button.btn.btn-primary(type='submit' id='submit') 検索

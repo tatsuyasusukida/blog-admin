@@ -1,0 +1,66 @@
+mixin form-input(name, label, type)
+  .form-group.mb-3
+    label.form-label(for=name) #{label}
+    input.form-control(type=type name=name id=name aria-required='true' v-model=`body.form.${name}` v-bind:class=`{'is-invalid': body.validation.${name}.ok === false}` v-bind:aria-invalid=`body.validation.${name}.ok === false` aria-describedby=`${name}Feedback`)
+    p.invalid-feedback(id=`${name}Feedback`)
+      template(v-if=`body.validation.${name}.isNotUndefined === false`)
+        | #{label}が未定義です（サーバー側の不具合です）
+      template(v-if=`body.validation.${name}.isNotEmpty === false`)
+        | #{label}をご入力ください
+      template(v-if=`body.validation.${name}.isUnique === false`)
+        | 同じ#{label}が既に登録されています
+
+mixin form-file(name, label)
+  .form-group.mb-3
+    label.form-label(for=name) #{label}
+    input.form-control(type='file' name=name id=name aria-required='true' v-bind:class=`{'is-invalid': body.validation.${name}.ok === false}` v-bind:aria-invalid=`body.validation.${name}.ok === false` aria-describedby=`${name}Feedback`)
+    p.invalid-feedback(id=`${name}Feedback`)
+      template(v-if=`body.validation.${name}.isNotUndefined === false`)
+        | #{label}が未定義です（サーバー側の不具合です）
+      template(v-if=`body.validation.${name}.isNotEmpty === false`)
+        | #{label}をお選びください
+
+mixin form-file-change(name, label)
+  fieldset.mb-3
+    legend.fs-6 #{label}
+    .form-check
+      input.form-check-input(type='radio' name=name id=`${name}0` value='変更しない' v-model=`body.form.${name}`)
+      label.form-check-label(for=`${name}0`) 変更しない
+    .form-check
+      input.form-check-input(type='radio' name=name id=`${name}1` value='変更する' v-model=`body.form.${name}`)
+      label.form-check-label(for=`${name}1`) 変更する
+
+mixin form-radio-is-published(name, label)
+  fieldset.mb-3
+    legend.fs-6 #{label}
+    .form-check
+      input.form-check-input(type='radio' name=name id=`${name}0` value='下書き' v-model=`body.form.${name}`)
+      label.form-check-label(for=`${name}0`) 下書き
+    .form-check
+      input.form-check-input(type='radio' name=name id=`${name}1` value='公開' v-model=`body.form.${name}`)
+      label.form-check-label(for=`${name}1`) 公開
+
+mixin form-textarea(name, label, rows)
+  .form-group.mb-3
+    label.form-label(for=name) #{label}
+    textarea.form-control(rows=rows || 5 name=name id=name aria-required='true' v-model=`body.form.${name}` v-bind:class=`{'is-invalid': body.validation.${name}.ok === false}` v-bind:aria-invalid=`body.validation.${name}.ok === false` aria-describedby=`${name}Feedback`)
+    p.invalid-feedback(id=`${name}Feedback`)
+      template(v-if=`body.validation.${name}.isNotUndefined === false`)
+        | #{label}が未定義です（サーバー側の不具合です）
+      template(v-if=`body.validation.${name}.isNotEmpty === false`)
+        | #{label}をご入力ください
+      template(v-if=`body.validation.${name}.isUnique === false`)
+        | 同じ#{label}が既に登録されています
+
+mixin form-radio(name, label)
+  fieldset.mb-3
+    legend.fs-6 #{label}
+    template(v-for=`(option, i) of body.options.${name}`)
+      .form-check
+        input.form-check-input(type='radio' name=name v-bind:id=`'${name}' + i` v-bind:value='option.value' v-model=`body.form.${name}` v-bind:class=`{'is-invalid': body.validation.${name}.ok === false}` v-bind:aria-invalid=`body.validation.${name}.ok === false` aria-describedby=`${name}Feedback`)
+        label.form-check-label(v-bind:for=`'${name}' + i`) {{option.text}}
+    p.invalid-feedback(id=`${name}Feedback` v-bind:class=`{'d-block': body.validation.${name}.ok === false}`)
+      template(v-if=`body.validation.${name}.isNotUndefined === false`)
+        | #{label}が未定義です（サーバー側の不具合です）
+      template(v-if=`body.validation.${name}.isNotEmpty === false`)
+        | #{label}をお選びください

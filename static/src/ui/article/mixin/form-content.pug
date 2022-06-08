@@ -1,0 +1,41 @@
+include ../../mixin/form
+
+mixin form-content
+  +form-input('code', '記事コード', 'text')
+  +form-input('title', 'タイトル', 'text')
+  +form-input('titleShort', '短いタイトル', 'text')
+  +form-input('visual', 'メインビジュアル', 'url')
+  +form-input('date', '日付', 'date')
+  +form-textarea('description', '導入テキスト')
+  +form-textarea('body', '本文', 15)
+  +form-input('minute', '読了時間', 'number')
+  +form-radio-is-published('isPublished', '下書きと公開のいずれか')
+
+  section
+    h2.fs-6 記事の目次
+    template(v-for='(articleSection, i) of body.articleSections')
+      section
+        h3.visually-hidden 見出し
+        .card.mb-3
+          .card-body
+            button.btn-close.float-end(type='button' v-on:click.prevent='onClickButtonSectionRemove(i)' v-bind:aria-label="(i + 1) + '番目の見出しを削除する'")
+            .form-group.mb-3
+              label.form-label(v-bind:for="'articleSection' + i + 'Title'") タイトル
+              input.form-control(type='text' v-bind:name="'articleSection' + i + 'Title'" v-bind:id="'articleSection' + i + 'Title'" aria-required='true' v-model=`articleSection.form.title` v-bind:class=`{'is-invalid': articleSection.validation.title.ok === false}` v-bind:aria-invalid=`articleSection.validation.title.ok === false` aria-describedby=`titleFeedback`)
+              p.invalid-feedback(id=`${name}Feedback`)
+                template(v-if=`articleSection.validation.title.isNotUndefined === false`)
+                  | {{i + 1}}番目の見出しのタイトルが未定義です（サーバー側の不具合です）
+                template(v-if=`articleSection.validation.title.isNotEmpty === false`)
+                  | {{i + 1}}番目の見出しのタイトルをご入力ください
+
+            .form-group.mb-3
+              label.form-label(v-bind:for="'articleSection' + i + 'Url'") URL
+              input.form-control(type='url' v-bind:name="'articleSection' + i + 'Url'" v-bind:id="'articleSection' + i + 'Url'" aria-required='true' v-model=`articleSection.form.url` v-bind:class=`{'is-invalid': articleSection.validation.url.ok === false}` v-bind:aria-invalid=`articleSection.validation.url.ok === false` aria-describedby=`urlFeedback`)
+              p.invalid-feedback(id=`${name}Feedback`)
+                template(v-if=`articleSection.validation.url.isNotUndefined === false`)
+                  | {{i + 1}}番目の見出しのタイトルが未定義です（サーバー側の不具合です）
+                template(v-if=`articleSection.validation.url.isNotEmpty === false`)
+                  | {{i + 1}}番目の見出しのタイトルをご入力ください
+
+    .d-grid.mb-3
+      button.btn.btn-outline-primary(type='button' v-on:click.prevent='onClickButtonSectionAdd()') 見出しを追加する

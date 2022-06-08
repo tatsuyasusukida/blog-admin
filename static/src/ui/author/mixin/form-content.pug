@@ -1,0 +1,10 @@
+include ../../mixin/form
+
+mixin form-content
+  +form-input('code', '著者コード', 'text')
+  +form-input('name', '氏名', 'text')
+  +form-input('kana', '氏名（フリガナ）', 'text')
+  +form-input('roman', '氏名（ローマ字）', 'text')
+  +form-input('url', 'URL', 'url')
+  +form-input('visual', 'メインビジュアル', 'url')
+  +form-textarea('profile', 'プロフィール')

@@ -1,0 +1,7 @@
+extends ./screen
+
+block header
+  header
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light(aria-label='ヘッダー')
+      .container
+        a.navbar-brand(href='/' aria-current=layout.url.pathname === '/' ? 'page' : null) 技術ブログ管理システム

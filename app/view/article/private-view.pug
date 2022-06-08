@@ -1,0 +1,162 @@
+extends ../layout/private
+
+block title
+  title 記事の詳細｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../../') ホーム
+        li.breadcrumb-item
+          a(href='../') 記事
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 詳細
+
+block main
+  main
+    .container
+      h1 記事の詳細
+      nav.mt-3(aria-label='メニュー')
+        .d-flex.flex-wrap.gap-2
+          a.btn.btn-outline-secondary(href='../') 戻る
+          a.btn.btn-outline-primary(href='./edit/') 修正...
+          a.btn.btn-outline-danger(href='./delete/') 削除...
+          a.btn.btn-outline-primary(href='./serial/set/') シリーズの紐付け...
+          a.btn.btn-outline-danger(href='./serial/unset/' class={'disabled': !serialArticle}) シリーズの紐付け解除...
+          a.btn.btn-outline-primary(href='./document/set/') 資料の紐付け...
+          a.btn.btn-outline-danger(href='./document/unset/' class={'disabled': !articleDocument}) 資料の紐付け解除...
+          a.btn.btn-outline-primary(href='./author/set/') 著者の紐付け...
+          a.btn.btn-outline-danger(href='./author/unset/' class={'disabled': !authorArticle}) 著者の紐付け解除...
+          a.btn.btn-outline-primary(href='../../article-article/add/?fromArticleId=' + article.id) 記事紐付けの登録...
+          a.btn.btn-outline-primary(href='../../document-article/add/?articleId=' + article.id) 資料紐付けの登録...
+          a.btn.btn-outline-primary(href='../../topic-article/add/?articleId=' + article.id) トピック紐付けの登録...
+      section
+        h2.mt-3 目次
+        nav(aria-label='目次')
+          ul.list-unstyled
+            li
+              a(href='#about') 記事について
+            li
+              a(href='#article-section') 記事の目次
+            li
+              a(href='#body') 記事の本文
+            li
+              a(href='#article-article-to') 紐付け先の記事
+            li
+              a(href='#article-article-from') 紐付け元の記事
+            li
+              a(href='#document-article') 紐付け元の資料
+            li
+              a(href='#topic-article') 紐付け元のトピック
+      section
+        h2.pt-3.mt-3.border-top(id='about') 記事について
+        dl.mb-0
+          dt 紐付け元のシリーズ
+          dd
+            if serialArticle
+              a(href=`../../serial/${serialArticle.serial.id}/`)
+                | #{serialArticle.serial.title}
+            else
+              | 未設定
+
+          dt 紐付け先の資料
+          dd
+            if articleDocument
+              a(href=`../../document/${articleDocument.document.id}/`)
+                | #{articleDocument.document.title}
+            else
+              | 未設定
+
+          dt 紐付け元の著者
+          dd
+            if authorArticle
+              a(href=`../../author/${authorArticle.author.id}/`)
+                | #{authorArticle.author.name}
+            else
+              | 未設定
+
+          dt 記事コード
+          dd #{article.code}
+
+          dt タイトル
+          dd #{article.title}
+
+          dt 短いタイトル
+          dd #{article.titleShort}
+
+          dt メインビジュアル
+          dd
+            a(href=article.visual target='_blank')
+              img.img-fluid(src=article.visual alt='')
+
+          dt 日付
+          dd #{article.dateText}
+
+          dt 導入テキスト
+          dd
+            p.mb-0
+              each line, i in article.descriptionLines
+                if i >= 1
+                  br
+                | #{line}
+
+          dt 読了時間
+          dd #{article.minute}分
+
+          dt 公開と下書きのいずれか
+          dd #{article.isPublishedText}
+
+      section
+        h2.pt-3.mt-3.border-top(id='article-section') 記事の目次
+        nav(aria-label='記事の目次')
+          ul.list-unstyled
+            each articleSection in articleSections
+              li
+                a(href=articleSection.url)
+                  | #{articleSection.title}
+
+      section
+        h2.pt-3.mt-3.border-top(id='body') 記事の本文
+        | !{article.body}
+
+      section
+        h2.pt-3.mt-3.border-top(id='article-article-to') 紐付け先の記事
+        if articleArticlesTo.length === 0
+          p.mb-0 紐付け先の記事はありません。
+        else
+          nav.mt-3(aria-labelledby='article-article-to')
+            each articleArticle in articleArticlesTo
+              .list-group
+                a.list-group-item.list-group-item-action(href=`../../article-article/${articleArticle.id}/`) #{articleArticle.articleTo.title}
+
+      section
+        h2.pt-3.mt-3.border-top(id='article-article-from') 紐付け元の記事
+        if articleArticlesFrom.length === 0
+          p.mb-0 紐付け元の記事はありません。
+        else
+          nav.mt-3(aria-labelledby='article-article-from')
+            each articleArticle in articleArticlesFrom
+              .list-group
+                a.list-group-item.list-group-item-action(href=`../../article-article/${articleArticle.id}/`) #{articleArticle.articleFrom.title}
+
+      section
+        h2.pt-3.mt-3.border-top(id='document-article') 紐付け元の資料
+        if documentArticles.length === 0
+          p.mb-0 紐付け元の資料はありません。
+        else
+          nav.mt-3(aria-labelledby='document-article')
+            each documentArticle in documentArticles
+              .list-group
+                a.list-group-item.list-group-item-action(href=`../../document-article/${documentArticle.id}/`) #{documentArticle.document.title}
+
+      section
+        h2.pt-3.mt-3.border-top(id='topic-article') 紐付け元のトピック
+        if topicArticles.length === 0
+          p.mb-0 紐付け元のトピックはありません。
+        else
+          nav.mt-3(aria-labelledby='topic-article')
+            each topicArticle in topicArticles
+              .list-group
+                a.list-group-item.list-group-item-action(href=`../../topic-article/${topicArticle.id}/`) #{topicArticle.topic.title}

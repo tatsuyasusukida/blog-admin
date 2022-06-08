@@ -1,0 +1,9 @@
+include ../../mixin/form
+
+mixin form-content
+  +form-input('fromName', '差出人の名前', 'text')
+  +form-input('fromEmail', '差出人のメールアドレス', 'text')
+  +form-input('toName', '宛先の名前', 'text')
+  +form-input('toEmail', '宛先のメールアドレス', 'text')
+  +form-input('subject', '件名', 'text')
+  +form-textarea('content', '本文')

@@ -1,0 +1,49 @@
+extends ../layout/private
+
+block title
+  title 資料請求の詳細｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../../') ホーム
+        li.breadcrumb-item
+          a(href='../') 資料請求
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 詳細
+
+block main
+  main
+    .container
+      h1 資料請求の詳細
+      nav.mt-3(aria-label='メニュー')
+        .d-flex.flex-wrap.gap-2
+          a.btn.btn-outline-secondary(href='../') 戻る
+          a.btn.btn-outline-danger(href='./delete/') 削除...
+      section
+        h2.mt-3 目次
+        nav(aria-label='目次')
+          ul.list-unstyled
+            li
+              a(href='#about') 資料請求について
+      section
+        h2.pt-3.mt-3.border-top(id='about') 資料請求について
+        dl.mb-0
+          dt 日時
+          dd #{request.dateText}
+
+          dt 資料
+          dd
+            a(href=`../../document/${document.id}/`)
+              | #{document.title}
+
+          dt お名前
+          dd #{request.name}
+
+          dt メールアドレス
+          dd #{request.email}
+
+          dt メールマガジンの配信
+          dd #{request.subscribe}

@@ -1,0 +1,33 @@
+extends ../layout/private
+include ../mixin/search-form
+include ../mixin/pagination
+
+block title
+  title 公開ファイルの一覧｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../') ホーム
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 公開ファイル
+
+block main
+  main
+    .container
+      h1 公開ファイルの一覧
+      nav.mt-3(aria-label='メニュー')
+        .d-flex.flex-wrap.gap-2
+          a.btn.btn-outline-secondary(href='../') 戻る
+          a.btn.btn-outline-primary(href='./add/') 登録...
+      +search-form(layout.req.query.keyword)
+      +page-summary(summary)
+      if publicFiles.length >= 1
+        nav.mt-3(aria-label='リスト')
+          .list-group
+            each publicFile in publicFiles
+              a.list-group-item.list-group-item-action(href=`./${publicFile.id}/`)
+                | #{publicFile.code}
+        +pagination(pagination)

@@ -1,0 +1,71 @@
+extends ../layout/private
+
+block title
+  title シリーズの詳細｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../../') ホーム
+        li.breadcrumb-item
+          a(href='../') シリーズ
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 詳細
+
+block main
+  main
+    .container
+      h1 シリーズの詳細
+      nav.mt-3(aria-label='メニュー')
+        .d-flex.flex-wrap.gap-2
+          a.btn.btn-outline-secondary(href='../') 戻る
+          a.btn.btn-outline-primary(href='./edit/') 修正...
+          a.btn.btn-outline-danger(href='./delete/') 削除...
+          a.btn.btn-outline-primary(href='./category/set/') カテゴリの紐付け...
+          a.btn.btn-outline-danger(href='./category/unset/' class={disabled: !category}) カテゴリの紐付け解除...
+      section
+        h2.mt-3 目次
+        nav(aria-label='目次')
+          ul.list-unstyled
+            li
+              a(href='#about') シリーズについて
+            li
+              a(href='#serial-article') 紐付け先の記事
+      section
+        h2.pt-3.mt-3.border-top(id='about') シリーズについて
+        dl.mb-0
+          dt 紐付け元のカテゴリ
+          dd
+            if category
+              a(href=`../../category/${category.id}/`) #{category.title}
+            else
+              | 未設定
+
+          dt シリーズコード
+          dd #{serial.code}
+
+          dt タイトル
+          dd #{serial.title}
+
+          dt 短いタイトル
+          dd #{serial.titleShort}
+
+          dt メインビジュアル
+          dd.mb-0
+            a(href=serial.visual target='_blank')
+              img.img-fluid(src=serial.visual alt='')
+
+          dt 公開と下書きのいずれか
+          dd #{serial.isPublishedText}
+
+      section
+        h2.pt-3.mt-3.border-top(id='serial-article') 紐付け先の記事
+        if articles.length === 0
+          p.mb-0 紐付け先の記事はありません。
+        else
+          nav.mt-3(aria-labelledby='serial-article')
+            each article in articles
+              .list-group
+                a.list-group-item.list-group-item-action(href=`../../article/${article.id}/`) #{article.title}

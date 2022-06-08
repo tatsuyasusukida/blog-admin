@@ -1,0 +1,76 @@
+extends ../layout/private
+
+block title
+  title メール送信履歴の詳細｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../../') ホーム
+        li.breadcrumb-item
+          a(href='../') メール送信履歴
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 詳細
+
+block main
+  main
+    .container
+      h1 メール送信履歴の詳細
+      nav.mt-3(aria-label='メニュー')
+        .d-flex.flex-wrap.gap-2
+          a.btn.btn-outline-secondary(href='../') 戻る
+      section
+        h2.mt-3 目次
+        nav(aria-label='目次')
+          ul.list-unstyled
+            li
+              a(href='#about') メール送信履歴について
+
+      section
+        h2.pt-3.mt-3.border-top(id='about') メール送信履歴について
+        dl.mb-0
+          dt 送信日時
+          dd #{email.dateText}
+
+          dt 差出人の名前
+          dd #{email.fromName}
+
+          dt 差出人のメールアドレス
+          dd #{email.fromEmail}
+
+          dt 宛先の名前
+          dd #{email.toName}
+
+          dt 宛先のメールアドレス
+          dd #{email.toEmail}
+
+          dt 件名
+          dd #{email.subject}
+
+          dt 本文
+          dd
+            p.mb-0
+              each line, i in email.contentLines
+                if i >= 1
+                  br
+                | #{line}
+
+          dt 未送信と送信済みのいずれか
+          dd #{email.isSentText}
+
+          if !email.isSent && email.errorCount >= 1
+            dt エラー回数
+            dd #{email.errorCount}回
+
+            dt エラーメッセージ
+            dd #{email.errorMessage}
+
+            dt エラーの詳細
+            dd
+              p.mb-0
+                each line, i in email.errorStackLines
+                  if i >= 1
+                    br
+                  | #{line}

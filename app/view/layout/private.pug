@@ -1,0 +1,10 @@
+extends ./screen
+
+block header
+  header
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light(aria-label='ヘッダー')
+      .container
+        a.navbar-brand(href='/private/' aria-current=layout.url.pathname === '/private/' ? 'page' : null) 技術ブログ管理システム
+    .container
+      p.alert.alert-info.mt-3
+        | デモとして動作しているためデータの登録、修正、削除ができないようになっています。

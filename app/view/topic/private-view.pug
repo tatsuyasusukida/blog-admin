@@ -1,0 +1,54 @@
+extends ../layout/private
+
+block title
+  title トピックの詳細｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../../') ホーム
+        li.breadcrumb-item
+          a(href='../') トピック
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 詳細
+
+block main
+  main
+    .container
+      h1 トピックの詳細
+      nav.mt-3(aria-label='メニュー')
+        .d-flex.flex-wrap.gap-2
+          a.btn.btn-outline-secondary(href='../') 戻る
+          a.btn.btn-outline-primary(href='./edit/') 修正...
+          a.btn.btn-outline-danger(href='./delete/') 削除...
+          a.btn.btn-outline-primary(href=`../../topic-article/add/?topicId=${topic.id}`) トピック紐付けの登録...
+      section
+        h2.mt-3 目次
+        nav(aria-label='目次')
+          ul.list-unstyled
+            li
+              a(href='#about') トピックについて
+            li
+              a(href='#article') 紐付け先のシリーズ
+      section
+        h2.pt-3.mt-3.border-top(id='about') トピックについて
+        dl.mb-0
+          dt 表示順序
+          dd #{topic.sort}
+
+          dt トピックコード
+          dd #{topic.code}
+
+          dt タイトル
+          dd #{topic.title}
+      section
+        h2.pt-3.mt-3.border-top(id='article') 紐付け先の記事
+        if articles.length === 0
+          p.mb-0 紐付け先の記事はありません。
+        else
+          nav.mt-3(aria-labelledby='article')
+            each article in articles
+              .list-group
+                a.list-group-item.list-group-item-action(href=`../../article/${article.id}/`) #{article.title}

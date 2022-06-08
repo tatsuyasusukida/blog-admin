@@ -1,0 +1,17 @@
+extends ../layout/private
+
+block title
+  title 非公開ページ向けレイアウト｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='./' aria-current='page') パンくずリスト
+
+block main
+  main
+    .container
+      h1 見出し
+      .mt-3.pt-5.pb-5.text-center.border メインコンテンツ

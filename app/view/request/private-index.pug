@@ -1,0 +1,32 @@
+extends ../layout/private
+include ../mixin/search-form
+include ../mixin/pagination
+
+block title
+  title 資料請求の一覧｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../') ホーム
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 資料請求
+
+block main
+  main
+    .container
+      h1 資料請求の一覧
+      nav.mt-3(aria-label='メニュー')
+        .d-flex.flex-wrap.gap-2
+          a.btn.btn-outline-secondary(href='../') 戻る
+      +search-form(layout.req.query.keyword)
+      +page-summary(summary)
+      if requests.length >= 1
+        nav.mt-3(aria-label='リスト')
+          .list-group
+            each request in requests
+              a.list-group-item.list-group-item-action(href=`./${request.id}/`)
+                | #{request.dateText}, #{request.document.title}
+        +pagination(pagination)

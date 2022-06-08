@@ -1,0 +1,108 @@
+extends ../layout/private
+
+block title
+  title 資料の詳細｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../../') ホーム
+        li.breadcrumb-item
+          a(href='../') 資料
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 詳細
+
+block main
+  main
+    .container
+      h1 資料の詳細
+      nav.mt-3(aria-label='メニュー')
+        .d-flex.flex-wrap.gap-2
+          a.btn.btn-outline-secondary(href='../') 戻る
+          a.btn.btn-outline-primary(href='./edit/') 修正...
+          a.btn.btn-outline-danger(href='./delete/') 削除...
+          a.btn.btn-outline-primary(href=`../../document-article/add/?documentId=${document.id}`) 資料紐付けの登録...
+      section
+        h2.mt-3 目次
+        nav(aria-label='目次')
+          ul.list-unstyled
+            li
+              a(href='#about') 資料について
+            li
+              a(href='#document-section') 資料の目次
+            li
+              a(href='#document-article') 紐付け先の記事
+            li
+              a(href='#article-document') 紐付け元の記事
+      section
+        h2.pt-3.mt-3.border-top(id='about') 資料について
+        dl.mb-0
+          dt 資料コード
+          dd #{document.code}
+
+          dt タイトル
+          dd #{document.title}
+
+          dt 短いタイトル
+          dd #{document.titleShort}
+
+          dt メインビジュアル
+          dd
+            a(href=document.visual target='_blank')
+              img.img-fluid(src=document.visual alt='')
+
+          dt 日付
+          dd #{document.dateText}
+
+          dt 導入テキスト
+          dd
+            p.mb-0
+              each line, i in document.descriptionLines
+                if i >= 1
+                  br
+                | #{line}
+
+          dt ファイル
+          dd
+            a(href=document.fileUrl target='_blank') #{document.file}
+
+          dt サンプル
+          dd
+            a(href=document.sampleUrl target='_blank') #{document.sample}
+
+          dt ページ数
+          dd #{document.page}ページ
+
+          dt 公開と下書きのいずれか
+          dd #{document.isPublishedText}
+
+      section
+        h2.pt-3.mt-3.border-top(id='document-section') 資料の目次
+        ul.list-unstyled
+          each documentSection in documentSections
+            li #{documentSection.title}
+              if documentSection.documentSubsections.length >= 1
+                ul.list-unstyled.ps-3
+                  each documentSubsection in documentSection.documentSubsections
+                    li #{documentSubsection.title}
+
+      section
+        h2.pt-3.mt-3.border-top(id='document-article') 紐付け先の記事
+        if documentArticles.length === 0
+          p.mb-0 紐付け先の記事はありません。
+        else
+          nav.mt-3(aria-labelledby='document-article')
+            each documentArticle in documentArticles
+              .list-group
+                a.list-group-item.list-group-item-action(href=`../../document-article/${documentArticle.id}/`) #{documentArticle.article.title}
+      section
+        h2.pt-3.mt-3.border-top(id='article-document') 紐付け元の記事
+        if articleDocuments.length === 0
+          p.mb-0 紐付け元の記事はありません。
+        else
+          nav.mt-3(aria-labelledby='article-document')
+            each articleDocument in articleDocuments
+              .list-group
+                a.list-group-item.list-group-item-action(href=`../../article/${articleDocument.article.id}/`) #{articleDocument.article.title}

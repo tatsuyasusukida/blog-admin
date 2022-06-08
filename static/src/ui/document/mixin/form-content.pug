@@ -1,0 +1,48 @@
+include ../../mixin/form
+
+mixin form-content
+  +form-input('code', '資料コード', 'text')
+  +form-input('title', 'タイトル', 'text')
+  +form-input('titleShort', '短いタイトル', 'text')
+  +form-input('visual', 'メインビジュアル', 'url')
+  +form-input('date', '日付', 'date')
+  +form-textarea('description', '導入テキスト')
+  +form-input('file', 'ファイル', 'url')
+  +form-input('sample', 'サンプル', 'url')
+  +form-input('page', 'ページ数', 'number')
+  +form-radio-is-published('isPublished', '下書きと公開のいずれか')
+
+  section
+    h2.fs-6 資料の目次
+    template(v-for='(documentSection, i) of body.documentSections')
+      section
+        h3.visually-hidden 見出し
+        .card.mb-3
+          .card-body
+            button.btn-close.float-end(type='button' v-on:click.prevent='onClickButtonSectionRemove(i)' v-bind:aria-label="(i + 1) + '番目の見出しを削除する'")
+            .form-group.mb-3
+              label.form-label(v-bind:for="'documentSection' + i + 'Title'") タイトル
+              input.form-control(type='text' v-bind:name="'documentSection' + i + 'Title'" v-bind:id="'documentSection' + i + 'Title'" aria-required='true' v-model=`documentSection.form.title` v-bind:class=`{'is-invalid': documentSection.validation.title.ok === false}` v-bind:aria-invalid=`documentSection.validation.title.ok === false` aria-describedby=`titleFeedback`)
+              p.invalid-feedback(id=`${name}Feedback`)
+                template(v-if=`documentSection.validation.title.isNotUndefined === false`)
+                  | {{i + 1}}番目の見出しのタイトルが未定義です（サーバー側の不具合です）
+                template(v-if=`documentSection.validation.title.isNotEmpty === false`)
+                  | {{i + 1}}番目の見出しのタイトルをご入力ください
+            .ps-5
+              template(v-for='(documentSubsection, j) of documentSection.documentSubsections')
+                section
+                  h4.visually-hidden 小見出し
+                  template(v-for='(documentSubsection, i) of documentSection.documentSubsection')
+                  button.btn-close.float-end(type='button' v-on:click.prevent='onClickButtonSubsectionRemove(i, j)' v-bind:aria-label="(i + 1) + '番目の見出しの' + (j + 1) + '番目の小見出しを削除する'")
+                  .form-group.mb-3
+                    label.form-label(v-bind:for="'documentSection' + i + 'DocumentSubsection' + j + 'Title'") タイトル
+                    input.form-control(type='text' v-bind:name="'documentSection' + i + 'DocumentSubsection' + j + 'Title'" v-bind:id="'documentSection' + i + 'DocumentSubsection' + j + 'Title'" aria-required='true' v-model=`documentSubsection.form.title` v-bind:class=`{'is-invalid': documentSubsection.validation.title.ok === false}` v-bind:aria-invalid=`documentSubsection.validation.title.ok === false` aria-describedby=`titleFeedback`)
+                    p.invalid-feedback(id=`${name}Feedback`)
+                      template(v-if=`documentSubsection.validation.title.isNotUndefined === false`)
+                        | {{i + 1}}番目の見出しの{{j + 1}}番目の小見出しのタイトルが未定義です（サーバー側の不具合です）
+                      template(v-if=`documentSubsection.validation.title.isNotEmpty === false`)
+                        | {{i + 1}}番目の見出しの{{j + 1}}番目の小見出しのタイトルをご入力ください
+              .d-grid
+                button.btn.btn-outline-primary(type='button' v-on:click.prevent='onClickButtonSubsectionAdd(i)') 小見出しを追加する
+    .d-grid.mb-3
+      button.btn.btn-outline-primary(type='button' v-on:click.prevent='onClickButtonSectionAdd()') 見出しを追加する

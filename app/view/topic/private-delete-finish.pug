@@ -1,0 +1,24 @@
+extends ../layout/private
+
+block title
+  title トピックの削除完了｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../../../../') ホーム
+        li.breadcrumb-item
+          a(href='../../../') トピック
+        li.breadcrumb-item 詳細
+        li.breadcrumb-item 削除
+        li.breadcrumb-item(aria-current='page') 完了
+
+block main
+  main
+    .container
+      h1 トピックの削除完了
+      nav.mt-3(aria-label='メイン')
+        .d-grid
+          a.btn.btn-success(href='../../') トピックの一覧を表示する

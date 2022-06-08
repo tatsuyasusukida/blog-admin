@@ -1,0 +1,32 @@
+mixin page-summary(summary)
+  if summary.count === 0
+    p.mt-3.mb-0 検索結果は0件でした。
+  else
+    p.mt-3.mb-3 全#{summary.max}ページ中#{summary.current}ページ目、全#{summary.count}件中#{summary.start}件目から#{summary.end}件目までを表示しています。
+
+mixin pagination (pagination)
+  nav.mt-3(aria-label='ページ番号')
+    ul.pagination.mb-0
+      if pagination.previous.isActive === true
+        li.page-item
+          a.page-link(href=pagination.previous.href) 前ページ
+      if pagination.previous.isActive === false
+        li.page-item.disabled
+          span.page-link 前のページ
+      each page in pagination.pages
+        if page.isDots === true
+          li.page-item.disabled
+            span.page-link(aria-hidden='true') ...
+        else
+          if page.isCurrent === true
+            li.page-item.active(aria-current='page')
+              span.page-link #{page.number}
+          else if page.isCurrent === false
+            li.page-item
+              a.page-link(href=page.href) #{page.number}
+      if pagination.next.isActive === true
+        li.page-item
+          a.page-link(href=pagination.next.href) 次ページ
+      if pagination.next.isActive === false
+        li.page-item.disabled
+          span.page-link 次のページ

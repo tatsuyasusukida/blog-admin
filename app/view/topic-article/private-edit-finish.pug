@@ -1,0 +1,27 @@
+extends ../layout/private
+
+block title
+  title トピック紐付けの修正完了｜技術ブログ管理システム
+
+block breadcrumb
+  nav.mt-3.mb-3(aria-label='パンくずリスト')
+    .container
+      ol.breadcrumb.mb-0
+        li.breadcrumb-item
+          a(href='../../../../') ホーム
+        li.breadcrumb-item
+          a(href='../../../') トピック紐付け
+        li.breadcrumb-item
+          a(href='../../') 詳細
+        li.breadcrumb-item
+          a(href='../') 修正
+        li.breadcrumb-item
+          a(href='./' aria-current='page') 完了
+
+block main
+  main
+    .container
+      h1 トピック紐付けの修正完了
+      nav.mt-3(aria-label='メイン')
+        .d-grid
+          a.btn.btn-success(href='../../') トピック紐付けを表示する
